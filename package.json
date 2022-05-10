@@ -4,10 +4,8 @@
   "main": "index.html",
   "license": "MIT",
   "files": [
-    "file.js",
-    "html.js",
-    "main.js",
-    "index.html",
+    "*.js",
+    "index.html"
   ],
   "author": "",
   "description": ""
