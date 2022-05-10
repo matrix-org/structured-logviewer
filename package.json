@@ -1,0 +1,14 @@
+{
+  "name": "@matrixdotorg/structured-logviewer",
+  "version": "0.0.1",
+  "main": "index.html",
+  "license": "MIT",
+  "files": [
+    "file.js",
+    "html.js",
+    "main.js",
+    "index.html",
+  ],
+  "author": "",
+  "description": ""
+}
