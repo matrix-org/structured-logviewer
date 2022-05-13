@@ -2,11 +2,15 @@
   "name": "@matrixdotorg/structured-logviewer",
   "version": "0.0.1",
   "main": "index.html",
-  "license": "MIT",
+  "license": "Apache-2.0",
+  "private": false,
   "files": [
     "*.js",
     "index.html"
   ],
+  "scripts": {
+    "start": "python -m http.server 7500"
+  },
   "author": "",
   "description": ""
 }
