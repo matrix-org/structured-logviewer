@@ -102,7 +102,7 @@ function showItemDetails(item, parent, itemNode) {
             error.stack
         ];
     } else {
-        errorNodes = ["error"];
+        errorNodes = ["none"];
     }
     const aside = t.aside([
         t.h3(itemCaption(item)),
