@@ -93,10 +93,21 @@ function showItemDetails(item, parent, itemNode) {
     const expandButton = t.button("Expand recursively");
     expandButton.addEventListener("click", () => expandResursively(itemNode.parentElement.parentElement));
     const start = itemStart(item);
+    let errorNodes;
+    const error = itemError(item);
+    if (error) {
+        errorNodes = [
+            `${error.name} ${error.message}`,
+            t.br(),
+            error.stack
+        ];
+    } else {
+        errorNodes = ["error"];
+    }
     const aside = t.aside([
         t.h3(itemCaption(item)),
         t.p([t.strong("Log level: "), logLevels[itemLevel(item)]]),
-        t.p([t.strong("Error: "), itemError(item) ? `${itemError(item).name} ${itemError(item).stack}` : "none"]),
+        t.p([t.strong("Error: "), ...errorNodes]),
         t.p([t.strong("Parent offset: "), parentOffset]),
         t.p([t.strong("Start: "), new Date(start).toString(), ` (${start})`]),
         t.p([t.strong("Duration: "), `${itemDuration(item)}ms`]),
@@ -107,7 +118,7 @@ function showItemDetails(item, parent, itemNode) {
             let valueNode;
             if (key === "ref") {
                 const refItem = itemByRef.get(value);
-                if (refItem) {
+                if (refItem) {eams/tiny-hope6667/overview
                     valueNode = t.a({href: `#${refItem.id}`}, itemCaption(refItem));
                 } else {
                     valueNode = `unknown ref ${value}`;
