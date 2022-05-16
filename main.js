@@ -304,13 +304,14 @@ function normalizeValueKey(key) {
 } 
 
 // returns the node and the total range (recursively) occupied by the node
-function itemToNode(item) {
+function itemToNode(item, parentType) {
+    const type = itemType(item) ?? parentType;
     const hasChildren = !!itemChildren(item)?.length;
     const className = {
         item: true,
         "has-children": hasChildren,
         error: itemError(item),
-        [`type-${itemType(item)}`]: !!itemType(item),
+        [`type-${type}`]: !!type,
         [`level-${itemLevel(item)}`]: true,
     };
 
@@ -336,7 +337,7 @@ function itemToNode(item) {
     ]);
     if (itemChildren(item) && itemChildren(item).length) {
         li.appendChild(t.ol(itemChildren(item).map(item => {
-            return itemToNode(item);
+            return itemToNode(item, type);
         })));
     }
     return li;
