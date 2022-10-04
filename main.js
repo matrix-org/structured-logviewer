@@ -92,6 +92,8 @@ function showItemDetails(item, parent, itemNode) {
     const parentOffset = itemStart(parent) ? `${itemStart(item) - itemStart(parent)}ms` : "none";
     const expandButton = t.button("Expand recursively");
     expandButton.addEventListener("click", () => expandResursively(itemNode.parentElement.parentElement));
+    const collapseButton = t.button("Collapse children");
+    collapseButton.addEventListener("click", () => collapseChildren(itemNode.parentElement.parentElement));
     const start = itemStart(item);
     let errorNodes;
     const error = itemError(item);
@@ -136,7 +138,7 @@ function showItemDetails(item, parent, itemNode) {
                 t.span({className: "value"}, valueNode)
             ]);
         })),
-        t.p(expandButton)
+        t.p([expandButton, " ", collapseButton])
     ]);
     document.querySelector("aside").replaceWith(aside);
 }
@@ -148,6 +150,16 @@ function expandResursively(li) {
         const len = ol.children.length;
         for (let i = 0; i < len; i += 1) {
             expandResursively(ol.children[i]);
+        }
+    }
+}
+
+function collapseChildren(li) {
+    const ol = li.querySelector("ol");
+    if (ol) {
+        const len = ol.children.length;
+        for (let i = 0; i < len; i += 1) {
+            ol.children[i].classList.remove("expanded");
         }
     }
 }
