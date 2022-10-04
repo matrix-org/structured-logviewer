@@ -171,13 +171,13 @@ function getRootItemHeader(prevItem, item) {
     if (prevItem) {
         const diff = itemStart(item) - itemEnd(prevItem);
         if (diff >= 0) {
-            return `+ ${formatTime(diff)}`;
+            return `+ ${formatDuration(diff)}`;
         } else {
             const overlap = -diff;
             if (overlap >= itemDuration(item)) {
                 return `ran entirely in parallel with`;
             } else {
-                return `ran ${formatTime(-diff)} in parallel with`;
+                return `ran ${formatDuration(-diff)} in parallel with`;
             }
         }
     } else {
@@ -250,7 +250,7 @@ const MS_IN_SEC = 1000;
 const MS_IN_MIN = MS_IN_SEC * 60;
 const MS_IN_HOUR = MS_IN_MIN * 60;
 const MS_IN_DAY = MS_IN_HOUR * 24;
-function formatTime(ms) {
+function formatDuration(ms) {
     let str = "";
     if (ms > MS_IN_DAY) {
         const days = Math.floor(ms / MS_IN_DAY);
@@ -274,6 +274,14 @@ function formatTime(ms) {
         str += `${ms}ms`;
     }
     return str;
+}
+
+function pad(str, len, chr) {
+    return chr.repeat(Math.max(0, len - str.length)) + str;
+}
+
+function formatTime(date) {
+    return date.getHours().toString() + ":" + pad(date.getMinutes().toString(), 2, "0") + ":" + pad(date.getSeconds().toString(), 2, "0");
 }
 
 function itemChildren(item) { return item.c; }
@@ -327,6 +335,7 @@ function normalizeValueKey(key) {
 
 // returns the node and the total range (recursively) occupied by the node
 function itemToNode(item, parentType) {
+    const startDate = new Date(itemStart(item));
     const type = itemType(item) ?? parentType;
     const hasChildren = !!itemChildren(item)?.length;
     const className = {
@@ -353,7 +362,7 @@ function itemToNode(item, parentType) {
             hasChildren ? t.button({className: "toggleExpanded"}) : "",
             t.a({className, id, href: `#${id}`}, [
                 t.span({class: "caption"}, captionNode),
-                t.span({class: "duration"}, `(${formatTime(itemDuration(item))})`),
+                t.span({class: "duration"}, ` ${formatTime(startDate)} (${formatDuration(itemDuration(item))})`),
             ])
         ])
     ]);
