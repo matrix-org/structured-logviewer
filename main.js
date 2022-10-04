@@ -304,7 +304,7 @@ function itemShortErrorMessage(item) {
 }
 
 function itemCaption(item) {
-     if (itemLabel(item) && itemError(item)) {
+    if (itemLabel(item) && itemError(item)) {
         return `${itemLabel(item)} (${itemShortErrorMessage(item)})`;
     } if (itemType(item) === "network") {
         return `${itemValues(item)?.method} ${itemValues(item)?.url}`;
