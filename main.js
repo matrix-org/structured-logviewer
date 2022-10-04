@@ -351,7 +351,7 @@ function itemToNode(item, parentType) {
     if (itemRef(item)) {
         const refItem = itemByRef.get(itemRef(item));
         if (refItem) {
-            captionNode = ["→ ", t.a({href: `#${refItem.id}`}, itemCaption(refItem))];
+            captionNode = ["ref ", t.a({href: `#${refItem.id}`}, itemCaption(refItem))];
         }
     }
     if (!captionNode) {
@@ -360,7 +360,7 @@ function itemToNode(item, parentType) {
         if (refId) {
             const refSources = itemsRefFrom.get(refId);
             if (refSources?.length > 0) {
-                refs = refs + ` (→ ${refSources.length})`;
+                refs = refs + ` (${refSources.length} ${refSources.length === 1 ? "ref" : "refs"})`;
             }
         }
         captionNode = itemCaption(item) + refs;
