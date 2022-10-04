@@ -120,7 +120,7 @@ function showItemDetails(item, parent, itemNode) {
             let valueNode;
             if (key === "ref") {
                 const refItem = itemByRef.get(value);
-                if (refItem) {eams/tiny-hope6667/overview
+                if (refItem) {
                     valueNode = t.a({href: `#${refItem.id}`}, itemCaption(refItem));
                 } else {
                     valueNode = `unknown ref ${value}`;
