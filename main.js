@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import {tag as t} from "./html.js";
-import {openFile, readFileAsText} from "./file.js";
+import {openFile, saveFile, readFileAsText} from "./file.js";
 
 const main = document.querySelector("main");
 
@@ -153,6 +153,7 @@ function expandResursively(li) {
 }
 
 document.getElementById("openFile").addEventListener("click", loadFile);
+document.getElementById("saveFile").addEventListener("click", saveCurrentFile);
 
 function getRootItemHeader(prevItem, item) {
     if (prevItem) {
@@ -178,7 +179,16 @@ async function loadFile() {
     await loadBlob(file);
 }
 
+function saveCurrentFile() {
+    if (lastOpenedBlob) {
+        saveFile(lastOpenedBlob, lastOpenedBlob.name ?? "logfile.json");
+    }
+}
+
+let lastOpenedBlob;
+
 export async function loadBlob(blob) {
+    lastOpenedBlob = blob;
     const json = await readFileAsText(blob);
     const logs = JSON.parse(json);
     logs.items.sort((a, b) => itemStart(a) - itemStart(b));

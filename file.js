@@ -40,6 +40,14 @@ export function openFile(mimeType = null) {
     return promise;
 }
 
+export function saveFile(blob, name) {
+    const blobUrl = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = blobUrl;
+    link.download = name;
+    link.click();
+}
+
 export function readFileAsText(file) {
     const reader = new FileReader();
     const promise = new Promise((resolve, reject) => {
