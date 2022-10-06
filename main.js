@@ -418,24 +418,26 @@ highlightForm.addEventListener("submit", evt => {
 
 function itemMatchesFilter(item, query) {
     if (itemError(item)) {
-        if (valueMatchesQuery(itemError(item), query)) {
+        if (valueMatchesQuery(itemError(item), query), undefined) {
             return true;
         }
     }
-    return valueMatchesQuery(itemValues(item), query);
+    return valueMatchesQuery(itemValues(item), query, undefined);
 }
 
-function valueMatchesQuery(value, query) {
-    if (typeof value === "string") {
-        return value.includes(query);
+function valueMatchesQuery(value, query, key) {
+    if (typeof value === "string" && value.includes(query)) {
+        return true;
+    } else if (typeof value === "number" && value.toString().includes(query)) {
+        return true;
+    } else if (key && key.includes(query)) {
+        return true;
     } else if (typeof value === "object" && value !== null) {
         for (const key in value) {
-            if (value.hasOwnProperty(key) && valueMatchesQuery(value[key], query)) {
+            if (value.hasOwnProperty(key) && valueMatchesQuery(value[key], query, key)) {
                 return true;
             }
         }
-    } else if (typeof value === "number") {
-        return value.toString().includes(query);
     }
     return false;
 }
